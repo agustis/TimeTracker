@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TimeTracker</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="project">
+        <item>Verkefni 1</item>
+        <item>Verkefni 2</item>
+        <item>Verkefni 3</item>
+    </string-array>
+
+    <string-array name="assignment">
+        <item>Verkþáttur A</item>
+        <item>Verkþáttur B</item>
+        <item>Verkþáttur C</item>
+    </string-array>
+
+
+</resources>

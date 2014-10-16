@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MyActivity"
+    android:background="#395795">
+
+    <include
+        android:id="@+id/headers"
+        layout="@layout/headers"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"/>
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="SÆKJA"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:background="#5db75d"
+        android:id="@+id/fetch_kennitala"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:text="          Slá inn kennitölu hér "
+        android:textColor="#c1c1c1"
+        android:textSize="20dp"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:layout_above="@+id/fetch_kennitala"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp" />
+
+
+</RelativeLayout>
