@@ -12,30 +12,25 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"/>
 
-    <Button
-        android:layout_width="300dp"
+    <Chronometer
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SÆKJA"
-        android:textSize="20dp"
-        android:textColor="#FFFFFF"
-        android:background="#5db75d"
-        android:id="@+id/fetch_kennitala"
+        android:textSize="50dp"
+        android:id="@+id/timecounter"
+        android:textColor="#ffffff"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
-    <EditText
+    <Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:text="          Slá inn kennitölu hér "
-        android:textColor="#c1c1c1"
-        android:textSize="20dp"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/login"
-        android:layout_above="@+id/fetch_kennitala"
+        android:text="Log Out"
+        android:textColor="#ffffff"
+        android:background="#ff0000"
+        android:id="@+id/logout_button"
+        android:layout_below="@+id/timecounter"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="25dp" />
+        android:layout_marginTop="92dp" />
 
 
 </RelativeLayout>
