@@ -73,6 +73,7 @@ public class MyActivity extends Activity implements AdapterView.OnItemSelectedLi
             public void onClick(View view) {
                 String url = baseurl+loginField.getText().toString();
                 asynctask(url);
+
             }
         });
         /*
@@ -117,5 +118,91 @@ public class MyActivity extends Activity implements AdapterView.OnItemSelectedLi
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void parseTracker(String url) {
+        InputStream source = retrieveStream(url);
+        Reader reader = new InputStreamReader(source);
+        Gson gson1 = new Gson();
+        Type collectionType = new TypeToken<List<TrackerObjects>>() {}.getType();
+        List<TrackerObjects> details = gson1.fromJson(reader, collectionType);
+
+    }
+
+    private class LoadApp extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected void onPostExecute(Void params) {
+
+           /*
+            else{
+                Toast.makeText(getApplicationContext(), "Ekki náðist að tengjast við vefþjón, athugið netstillingar og reynið aftur.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Splash.this, MainActivity.class);
+                Splash.this.startActivity(intent); */
+
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            // TODO Auto-generated method stub
+
+            //isJson = isJSONValid("http://www.json-generator.com/api/json/get/crOilFKrvS?indent=2");
+            boolean hasNetwork = haveNetworkConnection();
+            if(hasNetwork){
+                boolean isJson = isJSONValid("http://timetracker.olafura.com/reontech/user/");
+                if (hasNetwork && isJson) {
+                    //parseTopItems("http://www.json-generator.com/api/json/get/crOilFKrvS?indent=2");
+
+                }
+            }
+            return null;
+        }
+    }
+
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+
+    public boolean isJSONValid(String test)
+    {
+        InputStream source = retrieveStream(test);
+        String inputString = new Scanner(source, "UTF-8").useDelimiter("\\A").next();
+        boolean mix = inputString.substring(0, 1).equals("[") || inputString.substring(0, 2).equals("[{") || inputString.substring(0, 2).equals("[\"") || inputString.substring(0, 3).equals("[ \"");
+        return mix;
+    }
+
+    //setur url inn í parseTopItems og fyllir database með gögnunum
+    private InputStream retrieveStream(String url) {
+        DefaultHttpClient client = new DefaultHttpClient();
+        HttpGet getRequest = new HttpGet(url);
+        try {
+            HttpResponse getResponse = client.execute(getRequest);
+            final int statusCode = getResponse.getStatusLine().getStatusCode();
+            if (statusCode != HttpStatus.SC_OK) {
+                Log.w(getClass().getSimpleName(), "Error " + statusCode
+                        + " for URL " + url);
+                return null;
+            }
+            HttpEntity getResponseEntity = getResponse.getEntity();
+            return getResponseEntity.getContent();
+        } catch (IOException e) {
+            getRequest.abort();
+            Log.w(getClass().getSimpleName(), "Error for URL " + url, e);
+        }
+        return null;
     }
 }

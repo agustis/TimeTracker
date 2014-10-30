@@ -4,17 +4,17 @@ package Objects;
  * Created by agustis on 21.10.2014.
  */
 public class userObject {
-    private String[] project;
+    private String[] projects;
     private String[] tasks;
     private String number;
     private String name;
 
     public String[] getProject() {
-        return project;
+        return projects;
     }
 
     public void setProject(String[] project) {
-        this.project = project;
+        this.projects = project;
     }
 
     public String[] getTasks() {
