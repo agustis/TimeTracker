@@ -1,29 +1,18 @@
 package com.reontech.timetracker.timetracker;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Environment;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 
 import org.apache.http.HttpEntity;
@@ -37,10 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
-import java.util.List;
 import java.util.Scanner;
 
 import android.os.Bundle;
@@ -48,23 +33,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
-
-
-public class MyActivity extends Activity implements AdapterView.OnItemSelectedListener {
-    Spinner projectSpinner,assignmentSpinner;
+public class MyActivity extends Activity {
     EditText loginField;
     Button loginButton;
-    String baseurl = "http://timetracker.olafura.com/reontech/user/";
+    String baseurl = "http://timetracker.is/testcompany/user/";
+    RelativeLayout loginscreen;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+        setContentView(R.layout.project_assign);
 
+        loginscreen = (RelativeLayout)findViewById(R.id.login_screen);
 
         loginField = (EditText)findViewById(R.id.login);
         loginButton= (Button)findViewById(R.id.fetch_kennitala);
@@ -72,11 +57,19 @@ public class MyActivity extends Activity implements AdapterView.OnItemSelectedLi
             @Override
             public void onClick(View view) {
                 String url = baseurl+loginField.getText().toString();
-                asynctask(url);
+                new LogIn().execute(url);
+
+
 
             }
         });
-        /*
+
+
+    }
+
+    public class SpinnerLoad extends Activity implements AdapterView.OnItemSelectedListener {
+        Spinner projectSpinner,assignmentSpinner;
+
         projectSpinner = (Spinner)findViewById(R.id.project);
         assignmentSpinner = (Spinner)findViewById(R.id.assignment);
 
@@ -86,18 +79,20 @@ public class MyActivity extends Activity implements AdapterView.OnItemSelectedLi
 
         ArrayAdapter assign_adapter = ArrayAdapter.createFromResource(this,R.array.assignment,android.R.layout.simple_spinner_item);
         assignmentSpinner.setAdapter(assign_adapter);
-        assignmentSpinner.setOnItemSelectedListener(this); "@+id/login"*/
+        assignmentSpinner.setOnItemSelectedListener(this);
 
-    }
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            TextView myText = (TextView) view;
+            Toast.makeText(this, "you selected " + myText, Toast.LENGTH_SHORT).show();
+        }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        TextView myText = (TextView) view;
-        Toast.makeText(this,"you selected "+myText, Toast.LENGTH_SHORT).show();
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
 
-    }
+        }
 
-    public void onNothingSelected(AdapterView<?> adapterView){
+
 
     }
 
@@ -121,42 +116,37 @@ public class MyActivity extends Activity implements AdapterView.OnItemSelectedLi
     }
 
 
-    public void parseTracker(String url) {
+    public TrackerObjects parseTracker(String url) {
         InputStream source = retrieveStream(url);
         Reader reader = new InputStreamReader(source);
         Gson gson1 = new Gson();
-        Type collectionType = new TypeToken<List<TrackerObjects>>() {}.getType();
-        List<TrackerObjects> details = gson1.fromJson(reader, collectionType);
+        Type collectionType = new TypeToken<TrackerObjects>() {}.getType();
+        TrackerObjects details = gson1.fromJson(reader, collectionType);
 
+        return details;
     }
 
-    private class LoadApp extends AsyncTask<String, Void, Void> {
+    private class LogIn extends AsyncTask<String, Void, TrackerObjects> {
 
         @Override
-        protected void onPostExecute(Void params) {
+        protected void onPostExecute(TrackerObjects params) {
 
-           /*
-            else{
-                Toast.makeText(getApplicationContext(), "Ekki náðist að tengjast við vefþjón, athugið netstillingar og reynið aftur.", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Splash.this, MainActivity.class);
-                Splash.this.startActivity(intent); */
+           loginscreen.setVisibility(View.GONE);
 
         }
 
         @Override
-        protected Void doInBackground(String... params) {
+        protected TrackerObjects doInBackground(String... params) {
             // TODO Auto-generated method stub
 
             //isJson = isJSONValid("http://www.json-generator.com/api/json/get/crOilFKrvS?indent=2");
             boolean hasNetwork = haveNetworkConnection();
+            TrackerObjects result = null;
             if(hasNetwork){
-                boolean isJson = isJSONValid("http://timetracker.olafura.com/reontech/user/");
-                if (hasNetwork && isJson) {
-                    //parseTopItems("http://www.json-generator.com/api/json/get/crOilFKrvS?indent=2");
 
-                }
+                result = parseTracker(params[0]);
             }
-            return null;
+            return result;
         }
     }
 

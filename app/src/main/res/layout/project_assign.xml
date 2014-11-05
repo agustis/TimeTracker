@@ -84,18 +84,19 @@
             android:text="STIMPLA INN"
             android:background="#5db75d"
             android:textColor="#FFFFFF"
-            android:id="@+id/login"
+            android:id="@+id/login_button"
             android:layout_alignTop="@+id/button"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
     </LinearLayout>
 
-
-
-
-
-
-
-
+    <include
+        android:id="@+id/login_screen"
+        layout="@layout/activity_my"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#FFFFFF"
+        android:clickable="true"
+        android:visibility="visible"/>
 
 </RelativeLayout>

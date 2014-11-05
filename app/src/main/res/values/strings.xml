@@ -6,12 +6,20 @@
     <string name="action_settings">Settings</string>
 
     <string-array name="project">
+        <!-- Setja hvert verkefni inní dropdown menu úr logObject
+         for(i <= 0){
+            <item>Get.project(i)</item>
+         }-->
         <item>Verkefni 1</item>
         <item>Verkefni 2</item>
         <item>Verkefni 3</item>
     </string-array>
 
     <string-array name="assignment">
+        <!-- Setja hvert verkþátt inní dropdown menu úr logObject
+         for(i <= 0){
+            <item>Get.task(i)</item>
+         }-->
         <item>Verkþáttur A</item>
         <item>Verkþáttur B</item>
         <item>Verkþáttur C</item>
