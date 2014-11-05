@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,13 +44,20 @@ public class MyActivity extends Activity {
     EditText loginField;
     Button loginButton;
     String baseurl = "http://timetracker.is/testcompany/user/";
+    TextView welcome;
     RelativeLayout loginscreen;
+    Spinner projectSpinner,assignmentSpinner;
+    TrackerObjects trackerObj;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.project_assign);
 
         loginscreen = (RelativeLayout)findViewById(R.id.login_screen);
+        welcome = (TextView)findViewById(R.id.welcome);
+        projectSpinner = (Spinner)findViewById(R.id.project);
+        assignmentSpinner = (Spinner)findViewById(R.id.assignment);
 
         loginField = (EditText)findViewById(R.id.login);
         loginButton= (Button)findViewById(R.id.fetch_kennitala);
@@ -67,33 +75,36 @@ public class MyActivity extends Activity {
 
     }
 
-    public class SpinnerLoad extends Activity implements AdapterView.OnItemSelectedListener {
-        Spinner projectSpinner,assignmentSpinner;
+    public void fillSpinners(){
 
-        projectSpinner = (Spinner)findViewById(R.id.project);
-        assignmentSpinner = (Spinner)findViewById(R.id.assignment);
-
-        ArrayAdapter project_adapter = ArrayAdapter.createFromResource(this,R.array.project,android.R.layout.simple_spinner_item);
+        welcome.setText("Velkomin/n "+trackerObj.getUser().getName());
+        ArrayAdapter<String> project_adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, trackerObj.getUser().getTasks());
         projectSpinner.setAdapter(project_adapter);
-        projectSpinner.setOnItemSelectedListener(this);
+        projectSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        ArrayAdapter assign_adapter = ArrayAdapter.createFromResource(this,R.array.assignment,android.R.layout.simple_spinner_item);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        ArrayAdapter<String> assign_adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, trackerObj.getUser().getProject());
         assignmentSpinner.setAdapter(assign_adapter);
-        assignmentSpinner.setOnItemSelectedListener(this);
+        assignmentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        @Override
-        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            TextView myText = (TextView) view;
-            Toast.makeText(this, "you selected " + myText, Toast.LENGTH_SHORT).show();
-        }
+            }
 
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
-        }
-
-
-
+            }
+        });
     }
 
     @Override
@@ -131,7 +142,11 @@ public class MyActivity extends Activity {
         @Override
         protected void onPostExecute(TrackerObjects params) {
 
-           loginscreen.setVisibility(View.GONE);
+            trackerObj = params;
+            loginscreen.setVisibility(View.GONE);
+            fillSpinners();
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(loginField.getWindowToken(), 0);
 
         }
 

@@ -5,6 +5,8 @@
     tools:context=".MyActivity"
     android:background="#395795">
 
+
+
     <include
         android:id="@+id/headers"
         layout="@layout/headers"
@@ -13,83 +15,98 @@
         android:layout_alignParentTop="true"
         android:background="#FFFFFF"
         android:clickable="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Verkefni"
-        android:textColor="#FFFFFF"
-        android:id="@+id/textView2"
-        android:layout_above="@+id/project"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-
-    <Spinner
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/project"
-        android:background="#c1c1c1"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/headers"
+        android:padding="10dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Verkþáttur"
-        android:textColor="#FFFFFF"
-        android:id="@+id/textView3"
-        android:layout_below="@+id/project"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="44dp" />
+        <TextView
+            android:id="@+id/welcome"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/headers"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"/>
 
-    <Spinner
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/assignment"
-        android:background="#c1c1c1"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Verkefni"
+                android:textColor="#FFFFFF"
+                android:id="@+id/textView2"/>
+
+            <Spinner
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/project"
+                android:background="#c1c1c1"/>
+        </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:layout_below="@+id/assignment"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="2"
-            android:text="BAKKA"
-            android:background="#8a8a8a"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Verkþáttur"
             android:textColor="#FFFFFF"
-            android:id="@+id/back"
+            android:id="@+id/textView3"/>
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/assignment"
+            android:background="#c1c1c1"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
             android:layout_below="@+id/assignment"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true">
 
-        <Button
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="2"
+                android:text="BAKKA"
+                android:background="#8a8a8a"
+                android:textColor="#FFFFFF"
+                android:id="@+id/back"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="STIMPLA INN"
+                android:background="#5db75d"
+                android:textColor="#FFFFFF"
+                android:id="@+id/login_button" />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:text="STIMPLA INN"
-            android:background="#5db75d"
-            android:textColor="#FFFFFF"
-            android:id="@+id/login_button"
-            android:layout_alignTop="@+id/button"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:orientation="vertical"
+            android:layout_weight="1"/>
     </LinearLayout>
-
     <include
         android:id="@+id/login_screen"
         layout="@layout/activity_my"
@@ -98,5 +115,4 @@
         android:background="#FFFFFF"
         android:clickable="true"
         android:visibility="visible"/>
-
 </RelativeLayout>
