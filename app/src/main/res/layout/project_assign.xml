@@ -90,7 +90,7 @@
                 android:text="BAKKA"
                 android:background="#8a8a8a"
                 android:textColor="#FFFFFF"
-                android:id="@+id/back"/>
+                android:id="@+id/back_out"/>
 
             <Button
                 android:layout_width="fill_parent"
@@ -115,4 +115,12 @@
         android:background="#FFFFFF"
         android:clickable="true"
         android:visibility="visible"/>
+    <include
+        android:id="@+id/screen_logout"
+        layout="@layout/logout_screen"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#FFFFFF"
+        android:clickable="true"
+        android:visibility="gone"/>
 </RelativeLayout>

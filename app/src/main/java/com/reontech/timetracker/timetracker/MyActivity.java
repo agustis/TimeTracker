@@ -5,10 +5,12 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
@@ -42,12 +44,13 @@ import android.widget.Toast;
 
 public class MyActivity extends Activity {
     EditText loginField;
-    Button loginButton;
+    Button loginButton,cancelButton,assignButton,logoutButton;
     String baseurl = "http://timetracker.is/testcompany/user/";
     TextView welcome;
-    RelativeLayout loginscreen;
+    RelativeLayout loginscreen,logoutscreen;
     Spinner projectSpinner,assignmentSpinner;
     TrackerObjects trackerObj;
+    Chronometer chrono;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +58,11 @@ public class MyActivity extends Activity {
         setContentView(R.layout.project_assign);
 
         loginscreen = (RelativeLayout)findViewById(R.id.login_screen);
+        logoutscreen = (RelativeLayout)findViewById(R.id.screen_logout);
         welcome = (TextView)findViewById(R.id.welcome);
         projectSpinner = (Spinner)findViewById(R.id.project);
         assignmentSpinner = (Spinner)findViewById(R.id.assignment);
+        chrono = (Chronometer)findViewById(R.id.timecounter);
 
         loginField = (EditText)findViewById(R.id.login);
         loginButton= (Button)findViewById(R.id.fetch_kennitala);
@@ -67,6 +72,37 @@ public class MyActivity extends Activity {
                 String url = baseurl+loginField.getText().toString();
                 new LogIn().execute(url);
 
+
+            }
+        });
+        cancelButton = (Button)findViewById(R.id.back_out);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MyActivity.this, "Eigðu góðan dag "+trackerObj.getUser().getName(), Toast.LENGTH_LONG).show();
+                loginscreen.setVisibility(View.VISIBLE);
+
+
+            }
+        });
+        assignButton = (Button)findViewById(R.id.login_button);
+        assignButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logoutscreen.setVisibility(View.VISIBLE);
+                chrono.setBase(SystemClock.elapsedRealtime());
+                chrono.start();
+
+
+            }
+        });
+        logoutButton = (Button)findViewById(R.id.logout_button);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logoutscreen.setVisibility(View.GONE);
+                chrono.stop();
+                Toast.makeText(MyActivity.this, trackerObj.getUser().getName()+" hefur unnið "+chrono.getText()+" tíma", Toast.LENGTH_LONG).show();
 
 
             }
