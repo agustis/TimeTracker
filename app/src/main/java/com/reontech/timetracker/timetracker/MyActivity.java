@@ -60,7 +60,7 @@ public class MyActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.project/home/agustis_assign);
+        setContentView(R.layout.project_assign);
 
         loginscreen = (RelativeLayout)findViewById(R.id.login_screen);
         logoutscreen = (RelativeLayout)findViewById(R.id.screen_logout);
