@@ -52,10 +52,15 @@ public class MyActivity extends Activity {
     TrackerObjects trackerObj;
     Chronometer chrono;
 
+    /**
+     * Velur Main Screen og inniheldur alla takka og skipanir tengda þeim
+     * @author agustis
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.project_assign);
+        setContentView(R.layout.project/home/agustis_assign);
 
         loginscreen = (RelativeLayout)findViewById(R.id.login_screen);
         logoutscreen = (RelativeLayout)findViewById(R.id.screen_logout);
@@ -111,6 +116,12 @@ public class MyActivity extends Activity {
 
     }
 
+    /**
+     * Fyllir inní spinnerana Verkefnum og Verkþáttum og biður að heilsa notanda með nafni
+     *
+     * @author agustis
+     * @return void
+     */
     public void fillSpinners(){
 
         welcome.setText("Velkomin/n "+trackerObj.getUser().getName());
@@ -163,6 +174,12 @@ public class MyActivity extends Activity {
     }
 
 
+    /**
+     * Stingur JSON inní GSON til að lesa gögnin og geyma
+     * @author agustis
+     * @param url
+     * @return details
+     */
     public TrackerObjects parseTracker(String url) {
         InputStream source = retrieveStream(url);
         Reader reader = new InputStreamReader(source);
@@ -173,6 +190,11 @@ public class MyActivity extends Activity {
         return details;
     }
 
+    /**
+     * Fyllir inní spinnera og fjarlægir loginscreen þegar verkinu er lokið
+     * @author agustis
+     * @return result
+     */
     private class LogIn extends AsyncTask<String, Void, TrackerObjects> {
 
         @Override
@@ -201,6 +223,11 @@ public class MyActivity extends Activity {
         }
     }
 
+    /**
+     * Kannar hvort tæki sé tengt interneti og með hvernig búnað
+     * @author agustis
+     * @return connection type
+     */
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -226,7 +253,12 @@ public class MyActivity extends Activity {
         return mix;
     }
 
-    //setur url inn í parseTopItems og fyllir database með gögnunum
+    /**
+     * Setur url inn í parseTopItems og fyllir database með gögnunum
+     * @author agustis
+     * @param url
+     * @return null
+     */
     private InputStream retrieveStream(String url) {
         DefaultHttpClient client = new DefaultHttpClient();
         HttpGet getRequest = new HttpGet(url);
